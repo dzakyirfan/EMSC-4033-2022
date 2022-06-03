@@ -34,5 +34,6 @@ To build this project, I will do the following steps:
 
 ## Testing, validation, documentation
 - Testing for data import will be created to assert the correct type of input and number of data columns in terms of parameters
-- Testing for visualization to assert that the visualization function can be run
-- Testing for cross-section or data slice to assert the correct data type and DataFrame structure
+- Testing for visualization to assert that functions can produce the figure
+- Testing for cross-section or data slice to assert the correct data type using DataFrame, and correct number of columns
+- Testing for isovelocity data import with exact number of array columns
