@@ -10,7 +10,7 @@ Dataset Preparation and 3D visualizations of shear-wave velocity (Vs) model from
 ## Goals
 
 - Create a function to import hundreds of raw txt file into a single, structured numpy array that is ready for data analysis
-- Create a function to prepare a visualization-friendly dataset
+- Create functions to prepare a visualization-friendly dataset
 - Create functions that enable cross-section of 3D shear-velocity model in multiple orientations: north-south, east-west, and diagonal
 - Create a function to build constant-velocity depth dataset
 
@@ -31,6 +31,36 @@ To build this project, I will do the following steps:
   - The 3D model that I have visualized is then used for making the 2D cross-sections using Matplotlib. I will make functions to create dataset in desired cross-sectional area from north-south, east-west, and diagonal line by indexing, subsetting, and/or filtering Pandas DataFrame
   - The dataset of sliced lines can be an input for 2D visualization using Matplotlib triagulation contour, using matplotlib.axes.tricontourf()
   - The imported files can be further interpolated to obtain constant-velocity depth data in a built function
+
+### Timeline
+All these activities were taken in local host before being pushed and uploaded to this repository
+
+2 May 2022 - 8 May 2022:
+- Build repository for this project
+- Start writing the project plan
+
+9 May 2022 - 15 May 2022:
+- Create first draft of project notebook
+- Determine the dependencies
+- Create raw code for importing files
+- Updating the project plan
+
+16 May 2022 - 22 May 2022:
+- Create raw code for data visualizations
+- Test some Python visualization package (trial and error)
+
+23 May 2022 - 30 May 2022:
+- Create raw code for slicing dataset and slice visualizations
+- Create raw code to produce isovelocity array and map
+- Build functions for all raw codes
+- Build testing functions
+- Finalize the project notebook
+- Write project report
+
+31 May 2022 - 5 June 2022:
+- Upload and push files to this repository
+- Create `LICENSE.md`
+- Update `README.md`
 
 ## Testing, validation, documentation
 - Testing for data import will be created to assert the correct type of input and number of data columns in terms of parameters
