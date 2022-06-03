@@ -1,11 +1,10 @@
-# EMSC4033 project plan template
 
-## Project title
-Velocity Structure of Jakarta Basin
+
+# Velocity Structure of Jakarta Basin
 
 ## Executive summary
 
-Dataset Preparation and 3D visualizations of shear-wave velocity (Vs) model from Jakarta Basin. Velocity properties of a basin are influenced by depth, geometries, and lithology of the basin. This makes the shear-waves velocities of a basin can be highly heterogeneous. The visualizations help analysing shear-wave velocity of a basin to reveal the properties pattern and distribution easier. After the 3D model was created, we can extract 2D cross-sections in multiple orientation for more apparent image of subsurface shear velocity. Furthermore, depth of constant velocity can be extracted and mapped as a proxy of basin depth or certain geological parameters. 
+Dataset Preparation and 3D visualizations of shear-wave velocity (Vs) model from Jakarta Basin. Velocity properties of a basin are influenced by depth, geometries, and lithology of the basin. This makes the shear-waves velocities of a basin can be highly heterogeneous. The visualizations help analysing shear-wave velocity of a basin to reveal the properties pattern and distribution easier. After the 3D model was created, we can extract 2D cross-sections in multiple orientation for more apparent image of subsurface shear velocity. Furthermore, depth of constant velocity can be extracted and mapped as a proxy of basin depth or certain geological parameters. Hopefully, the workflow and functions that I have built could be applied for any velocity data in other regions, especially for geological and geophysical purposes
 
 ## Goals
 
