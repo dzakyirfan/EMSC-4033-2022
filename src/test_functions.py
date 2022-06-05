@@ -1,3 +1,4 @@
+
 import pytest
 import numpy
 import pandas
@@ -53,6 +54,8 @@ def test_parameter_list(expected_type=tuple, expected_total_lists=3):
     assert len(test_unique_val) == expected_total_lists, "***The function returns different number of output"
     
 def test_basin_scatterplot():
+    """Assert whether the function could successfully produce a figure"""
+    
     #Create simple artifical dataset for testing
     import numpy as np
     import matplotlib.pyplot as plt
@@ -206,6 +209,8 @@ def test_north_south_slice(expected_type=pandas.core.frame.DataFrame, expected_c
     assert len(test_ns_database['Longitude'].unique()) == 1, "***The returned DataFrame has no constant latitude value"
 
 def test_slice_scatterplot():
+    """Assert whether the function could successfully produce a figure"""
+    
     #Create simple artifical dataset for testing
     import numpy as np
     import matplotlib.pyplot as plt
@@ -232,6 +237,8 @@ def test_slice_scatterplot():
     assert plt.gcf().number == 1, "***the function cannot display the scatterplot"
     
 def test_northeast_southwest_contourplot():
+    """Assert whether the function could successfully produce a figure"""
+    
     #Create simple artifical dataset for testing
     import numpy as np
     import matplotlib.pyplot as plt
@@ -258,6 +265,8 @@ def test_northeast_southwest_contourplot():
     assert plt.gcf().number == 1, "***the function cannot display the scatterplot"
     
 def test_northwest_southeast_contourplot():
+    """Assert whether the function could successfully produce a figure"""
+    
     #Create simple artifical dataset for testing
     import numpy as np
     import matplotlib.pyplot as plt
@@ -284,6 +293,8 @@ def test_northwest_southeast_contourplot():
     assert plt.gcf().number == 1, "***the function cannot display the scatterplot"
     
 def test_latitudinal_longitudinal_contourplot():
+    """Assert whether the function could successfully produce a figure"""
+    
     #Create simple artifical dataset for testing
     import numpy as np
     import matplotlib.pyplot as plt
@@ -325,6 +336,26 @@ def test_isovelocity(expected_type = numpy.ndarray, expected_columns=3):
     
     assert type(isovel_array) == expected_type, "***The function returns different data type"
     assert isovel_array.shape[1] == expected_columns, "***The function returns unexpected number of columns of array"
+    
+def test_isovelocity_map():
+    """Assert whether the function could successfully produce a figure"""
+    
+    import os
+    import glob
+    import matplotlib.pyplot as plt
+    
+    #Test folder directory
+    os.chdir(r"/Users/dzakyirfan/Documents/Test dataset")
+
+    #Iterates through all dat file in the test directory
+    files_test = [i for i in glob.glob("*.dat")]
+    
+    isovel_array = isovelocity(files_test, 1.0)
+    
+    #test visualization
+    plt.close()
+    isovel_map = isovelocity_map(isovel_array, 1.0)
+    assert plt.gcf().number == 1, "***the function cannot display the map"
     
     
     
