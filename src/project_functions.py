@@ -386,10 +386,11 @@ def northeast_southwest_contourplot(nesw_dataframe):
     ax[0].set_xlabel('Longitude')
     ax[0].set_ylabel('Depth')
     ax[0].set_title('NE - SW Cross Section of Velocity Structure')
-    ax[0].annotate('Southwest', (x_long.min(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
-    ax[0].annotate('Northeast', (x_long.max(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
+    ax[0].annotate('Southwest', (0.08, 0.6), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
+    ax[0].annotate('Northeast', (0.75, 0.6), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
 
-    fig.colorbar(cont1, ax=ax[0])
+    cbar1 = fig.colorbar(cont1, ax=ax[0])
+    cbar1.ax.set_ylabel('Shear wave (km/s)')
 
     #Plot with respect to latitude
     ax[1].plot(x_lat, y, 'o', markersize=0.5)
@@ -397,10 +398,11 @@ def northeast_southwest_contourplot(nesw_dataframe):
     ax[1].set(xlim=(x_lat.min(), x_lat.max()), ylim=(y.min(), y.max()))
     ax[1].set_xlabel('Latitude')
     ax[1].set_ylabel('Depth')
-    ax[1].annotate('Southwest', (x_lat.min(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=12)
-    ax[1].annotate('Northeast', (x_lat.min(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=12)
+    ax[1].annotate('Southwest', (0.08, 0.1), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
+    ax[1].annotate('Northeast', (0.75, 0.1), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
 
-    fig.colorbar(cont2, ax=ax[1])
+    cbar2 = fig.colorbar(cont2, ax=ax[1])
+    cbar2.ax.set_ylabel('Shear wave (km/s)')
     
     plt.savefig('northeast_southwest.png', dpi=800)
     
@@ -439,10 +441,11 @@ def northwest_southeast_contourplot(nwse_dataframe):
     ax[0].set_xlabel('Longitude')
     ax[0].set_ylabel('Depth')
     ax[0].set_title('NW - SE Cross Section of Velocity Structure')
-    ax[0].annotate('Northwest', (x_long.min(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
-    ax[0].annotate('Southeast', (x_long.max(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
+    ax[0].annotate('Northwest', (0.08, 0.6), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
+    ax[0].annotate('Southeast', (0.75, 0.6), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
 
-    fig.colorbar(cont3, ax=ax[0])
+    cbar1 = fig.colorbar(cont3, ax=ax[0])
+    cbar1.ax.set_ylabel('Shear wave (km/s)')
 
     #Plot with respect to latitude
     ax[1].plot(x_lat, y, 'o', markersize=0.5)
@@ -450,10 +453,11 @@ def northwest_southeast_contourplot(nwse_dataframe):
     ax[1].set(xlim=(x_lat.min(), x_lat.max()), ylim=(y.min(), y.max()))
     ax[1].set_xlabel('Latitude')
     ax[1].set_ylabel('Depth')
-    ax[1].annotate('Southeast', (x_lat.min(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=12)
-    ax[1].annotate('Northwest', (x_lat.max(), y.min()), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=12)
+    ax[1].annotate('Southeast', (0.08, 0.1), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
+    ax[1].annotate('Northwest', (0.75, 0.1), xycoords='figure fraction', bbox=dict(boxstyle="round", fc="0.9", ec="gray"), size=10)
 
-    fig.colorbar(cont4, ax=ax[1])
+    cbar2 = fig.colorbar(cont4, ax=ax[1])
+    cbar2.ax.set_ylabel('Shear wave (km/s)') 
     
     plt.savefig('northeast_southwest.png', dpi=800)
     
@@ -550,6 +554,14 @@ def isovelocity_map(z_array, shear_velocity):
     import numpy as np
     import matplotlib.pyplot as plt
     import matplotlib.tri as tri
+    
+    #Exception handling
+    if type(z_array) != np.ndarray:
+        raise TypeError("Input must be a numpy array")
+    if z_array.shape[1] < 3:
+        raise Exception("Inadequate number of columns to generate unique value lists")
+    if type(shear_velocity) == str:
+        raise TypeError("Invalid velocity input")
     
     #Preparing parameter arrays
     z_lat = z_array[:,0]
