@@ -12,10 +12,10 @@ The data is usually obtained from numerous measurements in the same point as wel
 Plotly is a Python visualization package that require grid data as the input. The unified database will be further tailored to follow the required structure that is plotly-friendly
 
 ## Create Slice Data
-While Matplotlib and Plotly can execute 3D visualization, 2D plots are also needed to display clearer velocity parameters in certain orientations. This project will create two-dimensional slices in constant latitude (east-west), constant longitude (north_south), as well as diagonal direction
+While Matplotlib and Plotly can execute 3D visualization, 2D plots are also needed to display clearer velocity parameters in certain orientations. This project will create two-dimensional slices in constant latitude (east-west), constant longitude (north_south), as well as diagonal directions such as northeast-southwest and southeast-northwest. Before plotting, special dataset that contains only slice area should be prepared first. 
 
-## Iso-velocity contour
-Create depth contour map of constant velocity value (for example, visualize depth contour from V = 1.0 km/s or V = 2.5 km/s) 
+## Iso-velocity Depth
+Create depth contour map of constant velocity value (for example, visualize depth contour from V = 1.0 km/s or V = 2.5 km/s) by preparing dataset of constant velocity that we want to know through interpolation before putting the dataset as visualization input.
     """
     
     return markdown_documentation
@@ -540,3 +540,46 @@ def isovelocity(filenames, velocity):
     z_array = np.vstack(z_list)
     
     return z_array
+
+def isovelocity_map(z_array, shear_velocity):
+    """Input: A numpy array consists of longitude, latitude, and depth information; shear_velocity float
+    Function purpose: Interpolate array to visualization
+    Return: 2D Matplotlib contour map"""
+    
+    #Import packages
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import matplotlib.tri as tri
+    
+    #Preparing parameter arrays
+    z_lat = z_array[:,0]
+    z_long = z_array[:,1]
+    z_depth = z_array[:,2]
+    
+    #Create grid coordinates
+    lat_i = np.linspace(z_lat.min(), z_lat.max(), 25)
+    long_i = np.linspace(z_long.min(), z_long.max(), 25)
+
+    #Make interpolation
+    triang = tri.Triangulation(z_long, z_lat)
+    interpolator = tri.LinearTriInterpolator(triang, z_depth)
+    LONGI, LATI = np.meshgrid(long_i, lat_i)
+    DEPTHI = interpolator(LONGI, LATI)
+
+    #Plotting
+    fig, ax = plt.subplots()
+
+    cntr = ax.contourf(LONGI, LATI, DEPTHI, levels=50, cmap="RdBu_r")
+
+    ax.plot(z_long, z_lat, 'ko', ms=0.5)
+    ax.set(xlim=(z_long.min(), z_long.max()), ylim=(z_lat.min(), z_lat.max()))
+    ax.set_xlabel('Longitude')
+    ax.set_ylabel('Latitude')
+    ax.set_title('Depth of Vs = ' + str(shear_velocity) + ' km/s')
+
+    cbar = fig.colorbar(cntr)
+    cbar.ax.set_ylabel('Depth (m)')
+    
+    plt.savefig('isovelocity_map.png')
+
+    return plt.show()
