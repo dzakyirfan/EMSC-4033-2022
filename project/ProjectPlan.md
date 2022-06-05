@@ -78,9 +78,7 @@ More information about testing functions can be seen in `test_functions.py` unde
 ### Documentation, Code Review
 While this section will talk about the general review and documentation for the project functions, detailed information about each of the project functions can be seen in [`project_functions.py`](https://github.com/dzakyirfan/EMSC-4033-2022/blob/b819f8c0d8fac44c97b8d468992f3c2b0d4736dd/src/project_functions.py).
 
-Generally, all functions can run successfully under several circumstances. First, the imported file should follow certain format. The individual file format has structure like this:
-
-![](notebook/sample_input_file.png)
+Generally, all functions can run successfully under several circumstances. First, the imported file should follow certain format. The individual file format has structure like [here](https://github.com/dzakyirfan/EMSC-4033-2022/blob/b37f364cc58185ea1b594e7c034fdf3bd91d1606/notebook/sample_input_file.png)
 
 The top most column contains single longitude and latitude value, while depth and velocity data can be found in subsequent columns. This individual file should be imported using **np.genfromtxt()** and arranged with **np.stack()** so that each depth has information regarding latitude, longitude, and velocity in the same column. The arranged output will be 2D numpy array of row and column, with rows representing data for each point, and columns representing data parameters. It does not stop there, but the arranged array for each locations should be merged using **np.concatenate** and make use of empty array to form unified dataset in the same array.
 
