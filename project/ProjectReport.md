@@ -14,34 +14,38 @@ This project uses Python as a primary programming language, as well as using Jup
 - `plotly`: this project will also use `plotly` as data visualization library, with some advantages over `matplotlib` in terms of interactive display. This include rotate-able visualization, and zoom features that will help seeing more detailed velocity structure. However, running `plotly` will require large memory that could affect the efficiency of project execution, depending on users' PC.
 
 ## Instruction
-This section contains guideline for functions that were created for this project. There are total 14 functions, in which all of them can be categorized according to roles as listed below:
+This section contains guideline for functions that were created for this project. There are total 15 functions, in which all of them can be categorized according to the purposes as listed below:
 
 ### Documentation
 **project_documentation()** return brief summary of project activities
 
 ### Data Importing
-**import_file()** handle file importing through iteration and assemble multiple raw files into a single dataset with defined array shape. Each file represent single location defined by latitude and longitude, but all file has the same depth interval. This function require list of filenames as an input, and return the expected basin dataset in the form of two-dimensional numpy array
+**import_file()** handle file-importing through iteration of txt/dat files, assemble, and merge them into a single dataset with defined array shape in 2D. Each file represent single location defined by latitude and longitude, but all file has the same depth interval. This function require list of filenames as an input that can be set up using `os` & `glob`, and return the expected basin dataset in the form of two-dimensional numpy array
 
 ### List Making
-**parameter_list()** make lists of unique values in latitude, longitude, and depth. This function require numpy array that has been created from **import_file()**, and return a tuple of unique values
+**parameter_list()** make lists of unique values in latitude, longitude, and depth. This function require an input of numpy array that has been created from **import_file()**, and return a tuple of unique values
 
 ### DataFrame Building
-- **plotly_friendly_dataframe()** construct basin dataset in Pandas DataFrame with manipulation of data shape to follows grid-like shape that is permissible for `plotly` visualization. Because most basin have irregular boundaries, the geophysical data will usually follow the basin extent. This will lead to irregular data distribution that are difficult to follow the rectangular grid shape. This function will overcome this irregularity problem by adding null data in wider-defined rectangular area that bound the original basin extent. 
-This function require numpy array from **import_file()** and return the Pandas DataFrame that has followed a rectangular shape
-- **northeast_southwest_slice()** construct basin dataset with coordinates in northeast - southwest diagonal line only, through latitude-longitude pairing and dataframe subsetting. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
-- **northwest_southeast_slice()** construct basin dataset with coordinates in northwest - southeast diagonal line only, through latitude-longitude pairing and dataframe subsetting. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
-- **north_south_slice()** construct basin dataset with coordinates in north-south line only, through subsetting in a constant longitude. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
-- **east_west_slice()** construct basin dataset with coordinates in east-west line only, through subsetting in a constant latitude. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
+- **plotly_friendly_dataframe()** construct basin dataset in Pandas DataFrame with manipulation of data shape and sorting to follows rectangular grid shape that is permissible for `plotly` visualization. Because most basin have irregular boundaries, the geophysical data will usually follow the basin extent. This will lead to irregular data distribution that are difficult to follow the rectangular grid shape. This function will overcome this irregularity problem by adding null data (written as -99.99) in wider-border rectangular area that bound the original basin extent. This function require numpy array from **import_file()** and return the Pandas DataFrame that has followed rectangular shape.
+- **northeast_southwest_slice()** construct basin dataset with coordinates in northeast - southwest diagonal line only, through latitude-longitude pairing using if-else condition that depends on number of their unique values, create new DataFrame and dataframe subsetting by setting latitude-longitude pair as the index to match the subsetting condition. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
+- **northwest_southeast_slice()** construct basin dataset with coordinates in northwest - southeast diagonal line only, through latitude-longitude pairing using if-else condition that depends on number of their unique values, create new DataFrame and dataframe subsetting by setting latitude-longitude pair as the index to match the subsetting condition. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
+- **north_south_slice()** construct basin dataset with coordinates in north-south line, through subsetting in a constant longitude. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
+- **east_west_slice()** construct basin dataset with coordinates in east-west line, through subsetting in a constant latitude. This function require primary dataframe from **plotly_friendly_dataframe()** and return the sliced dataframe
 
 ### Data Visualization
 - **basin_scatterplot()** visualize dataframe from **plotly_friendly_dataframe()** using `matplotlib`. This function require primary dataframe from **plotly_friendly_dataframe()** and return the 3D `matplotlib` scatterplot
 - **slice_scatterplot()** visualize sliced dataframe  using `matplotlib`. This function require primary dataframe from **northeast_southwest_slice()**, **northwest_southeast_slice()**, **north_south_slice()**, **east_west_slice()**, and return the 3D `matplotlib` scatterplot
+All scatterplot function use **matplotlib.pyplot.axes(projection='3d')** for instant plotting. 
+
 - **northeast_southwest_contourplot()** and **northwest_southeast_contourplot()** visualize sliced dataframe in diagonal directions using triangulated contour fill from `matplotlib`. These functions require sliced dataframe of respective orientations and return two `matplotlib` contour map, each map is basically the same but with different x axis (one using longitude and one using latitude)
 - **latitudinal_longitudinal_contourplot()** visualize sliced dataframe in horizontal or vertical directions using triangulated contour fill from `matplotlib`. This function requires sliced dataframe from **north_south_slice()** with a latitude value from **parameter_list()** or **east_west_slice()** with a longitude value from **parameter_list()**, and return a contour map
+All contourplot function use **matplotlib.pyplot.tricontourf()** which is suitable for faster visualization of unstructured data points.
+
+While slice visualizations have **slice_scatterplot()** and **dir_contourplot()**, the scatterplot functions were primarily used to cross-check the contourplot in terms of plotting distribution. In other words, **slice_scatterplot()** enable the observation of right orientation for contourplot function. Contourplot functions display clearer cross-section data so the subsurface distribution can be more convenient for analysis. 
 
 ### Constant Velocity Map Making
 - **isovelocity()** generate numpy array that contains depth of certain velocity. Given that velocity are measure parameter in which is extremely difficult to obtain regular interval values, certain velocity map can be generated through depth interpolation in each locations. This function requires list of file directories and desired velocity value as the input, and return the numpy array consists of latitude, longitude, and depth.
-- **isovelocity_map()** create triangulated data from array dataset that has been generated by **isovelocity()** to prepare the grid dataset that is permissible for contour visualization.
+- **isovelocity_map()** create triangulated data from array dataset that has been generated by **isovelocity()** to prepare the grid dataset that is permissible for contour visualization using **matplotlib.pyplot.contourf()**.
 
 ## Testing
 
