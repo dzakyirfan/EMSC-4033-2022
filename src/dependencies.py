@@ -14,5 +14,6 @@ import glob
 import matplotlib.pyplot as plt
 import pandas as pd
 import plotly.graph_objects as go
+import matplotlib.tri as tri
 
 from IPython.display import display_markdown
