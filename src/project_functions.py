@@ -6,16 +6,19 @@ def project_documentation():
 Velocity data that have been acquired can be visualized to illustrate the velocity distribution as one of important geological parameters to indicate basin lithology and/or structure. The visualization is important to be done in two- or three-dimensional to see the distribution pattern for further analysis
 
 ## Importing data
-The data is usually obtained from numerous measurements in the same point as well as different point. It leads to hundreds of large-sized database that should be imported. In order to import the data effectively, the dedicated function of importing file was constructed to acquire and merge different files into one single database
+The data is obtained from multiple depth measurements in the same point as well as among different locatios. It leads to hundreds of large-sized database that should be imported. In order to import the data effectively, the dedicated function of importing file was constructed to acquire and merge different files into one single database
+
+## Dataset for Matplotlib Visualization
+Because this project will be primarily use visualization, matplotlib will be heavily used as a primary visualization tool. While this package offer efficient computing time and a lot of functions, it is still considered insufficient for thorough look of 3D basin model. Therefore, Plotly will also be used for a more inetractive visualization tool. 
 
 ## Dataset for Plotly Visualization
 Plotly is a Python visualization package that require grid data as the input. The unified database will be further tailored to follow the required structure that is plotly-friendly
 
 ## Create Slice Data
-While Matplotlib and Plotly can execute 3D visualization, 2D plots are also needed to display clearer velocity parameters in certain orientations. This project will create two-dimensional slices in constant latitude (east-west), constant longitude (north_south), as well as diagonal directions such as northeast-southwest and southeast-northwest. Before plotting, special dataset that contains only slice area should be prepared first. 
+While Matplotlib and Plotly can execute 3D visualization, 2D plots are also needed to display clearer velocity parameters in certain orientations. This project will create two-dimensional slices in constant latitude (east-west), constant longitude (north_south), as well as diagonal directions such as northeast-southwest and southeast-northwest. Before plotting, special dataset that contains only slice area should be prepared first by inserting primary big dataset. 
 
 ## Iso-velocity Depth
-Create depth contour map of constant velocity value (for example, visualize depth contour from V = 1.0 km/s or V = 2.5 km/s) by preparing dataset of constant velocity that we want to know through interpolation before putting the dataset as visualization input.
+Create depth contour map of constant velocity value (for example, visualize depth contour from V = 1.0 km/s or V = 2.5 km/s) by preparing dataset of constant velocity that we want to know through interpolation before putting the dataset as visualization input. The iso-velocity contour map can be an approach for determine geological boundary, such as rock boundary or basin floor.
     """
     
     return markdown_documentation
